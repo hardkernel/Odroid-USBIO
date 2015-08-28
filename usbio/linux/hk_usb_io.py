@@ -9,7 +9,7 @@ import time
 # You can add your test code to the bottom
 # below the === end of module statement, or 
 # externally call the module
-# note: sfr_* routines still need to be tested
+# 
 # ---- This version adds a python class for constants
 
 class Bunch(dict):
@@ -97,8 +97,8 @@ def module_version():
 	return a
 def rom_version(dev):			# get PIC ROM version
 	# read ROM version 
-	dev.write(1, [u_rom], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, [u_rom], 100)
+	ret = dev.read(0x81, 64, 100)
 	rom_version = ''
 	rom_version += chr(ret[1])
 	rom_version += '.'
@@ -106,73 +106,73 @@ def rom_version(dev):			# get PIC ROM version
 	rom_version += chr(ret[3])
 	return rom_version
 def toggle_led(dev):			# toggle LED
-	dev.write(1, [u_led], 0, 100)
+	dev.write(1, [u_led], 100)
 def read_switch(dev):			# read switch press
-	dev.write(1, [u_swc], 0, 100)
-	sw = dev.read(0x81, 64, 0, 100)
+	dev.write(1, [u_swc], 100)
+	sw = dev.read(0x81, 64, 100)
 	if (sw[1] == 0):
 		 return True
 	else:
 		 return False
 def gpio_init(dev,pin,pdir):		# set GPIO direction on pin
-	dev.write(1,[u_gpd, pin, pdir], 0, 100)
+	dev.write(1,[u_gpd, pin, pdir], 100)
 def gpio_out(dev,pin):			# otuput a value on GPIO pin
-	dev.write(1, [u_gpo, pin, 1], 0, 100)
+	dev.write(1, [u_gpo, pin, 1], 100)
 def gpio_in(dev,pin):			# read value on GPIO pin
-	dev.write(1,[u_gpi, pin], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1,[u_gpi, pin], 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def adc_ra0(dev):			# do ADC conversion on RA0
-	dev.write(1,[u_ad0], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1,[u_ad0], 100)
+	ret = dev.read(0x81, 64, 100)
 	value = ret[2] << 8
 	value = value | ret[1]
 	return value
 def adc_ra1(dev):			# do ADC conversion on RA1
-	dev.write(1,[u_ad1], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1,[u_ad1], 100)
+	ret = dev.read(0x81, 64, 100)
 	value = ret[2] << 8
 	value = value | ret[1]
 	return value
 def ser_test(dev):			# check if a char available on serial port
-	dev.write(1, [u_tst], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, [u_tst], 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def ser_putc(dev,schar):		# send a char to the serial port
 	a = map( ord, schar)
 	a.insert(0, u_usc)
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def ser_puts(dev, strval):		# send a string to the serial port
 	a = map( ord, strval)
 	a.insert(0, u_uss)
 	a.append(0)
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def ser_getc(dev):			# get a single char from the serial port
-	dev.write(1, [u_urc], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, [u_urc], 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def sfr_get_reg(dev, reg):		# get a SFR register
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 	a[10] = reg
 	a[0] = h_getr
-	dev.write(1, a, 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, a, 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def sfr_set_reg(dev, reg, rval):	# set a SFR register
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 	a[10] = reg			# register to select
 	a[11] = rval			# value to set
 	a[0] = h_setr
-	dev.write(1, a, 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, a, 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def sfr_get_regbit(dev, reg, bval):	# get a SFR register bit
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 	a[10] = reg			# register to select
 	a[11] = bval			# bit value to get
 	a[0] = h_getb
-	dev.write(1, a, 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, a, 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def sfr_set_regbit(dev, reg, rbit, bval):	# set a SFR register bit
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
@@ -180,41 +180,41 @@ def sfr_set_regbit(dev, reg, rbit, bval):	# set a SFR register bit
 	a[11] = rbit			# bit to set
 	a[12] = bval			# bit value to set
 	a[0]  = h_setb
-	dev.write(1, a, 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, a, 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]
 def i2c_init(dev):			# init i2c
-	dev.write(1,[u_i2c_init], 0, 100)
+	dev.write(1,[u_i2c_init], 100)
 def i2c_idle(dev):			# i2c idle
-	dev.write(1,[u_i2c_idle], 0, 100)
+	dev.write(1,[u_i2c_idle], 100)
 def i2c_start(dev, cval):		# i2c start
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 	a[0] = u_i2c_strt
 	a[1] = cval
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def i2c_stop(dev):			# i2c stop
-	dev.write(1,[u_i2c_stop], 0, 100)
+	dev.write(1,[u_i2c_stop], 100)
 def i2c_slave_ack(dev):			# i2c slave ack
-	dev.write(1,[u_i2c_slak], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1,[u_i2c_slak], 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]			# 1=no ack, 0=ack
 def i2c_write(dev, cval):		# i2c write
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 	a[0] = u_i2c_writ
 	a[1] = cval
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def i2c_master_ack(dev, cval):		# 1=nack, 0=ack
 	a = array('B',[0,0,0,0,0,0,0,0,0,0,0,0,0,0])
 	a[0] = u_i2c_mack
 	a[1] = cval
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def i2c_read(dev):			# i2c read
-	dev.write(1,[u_i2c_read], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1,[u_i2c_read], 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]			# i2c_read char
 def i2c_isdatardy(dev):			# check if i2c char avail
-	dev.write(1,[u_i2c_dtrd], 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1,[u_i2c_dtrd], 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]			# i2c_read char
 def spi_init(dev, mode, baud, sample):	# SPI init
 	a = array('B',[0,0,0,0,0])
@@ -222,19 +222,19 @@ def spi_init(dev, mode, baud, sample):	# SPI init
 	a[1] = mode
 	a[2] = baud
 	a[3] = sample
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def spi_transfer(dev, value): 		# SPI transfer 
 	a = array('B',[0,0,0,0,0])
 	a[0] = u_spi_tran
 	a[1] = value
-	dev.write(1, a, 0, 100)
-	ret = dev.read(0x81, 64, 0, 100)
+	dev.write(1, a, 100)
+	ret = dev.read(0x81, 64, 100)
 	return ret[1]			# ret SPI char read
 def spi_cs(dev, select): 		# enable or disable SPI CS
 	a = array('B',[0,0,0,0,0])
 	a[0] = u_spi_cs
 	a[1] = select
-	dev.write(1, a, 0, 100)
+	dev.write(1, a, 100)
 def close(dev):				# reset USB device
 	dev.reset()
 #===================== end of module =========
