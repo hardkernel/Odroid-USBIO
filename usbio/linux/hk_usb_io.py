@@ -4,7 +4,7 @@ import usb.util
 from array import array
 import sys
 import time
-# Markham Thomas 2013
+# Markham Thomas 2015
 # This version is under heavy development 
 # You can add your test code to the bottom
 # below the === end of module statement, or 
@@ -24,8 +24,8 @@ class Bunch(dict):
 		object.__setattr__(self, name, value)
 	def copy(self):
 		return Bunch(dict.copy(self))
-_mod_ver  = '0.51'	# python HKUSBIO module version
-_mod_date = '2/25/2013'	# module date
+_mod_ver  = '0.52'	# python HKUSBIO module version
+_mod_date = '8/28/2015'	# module date
 u_ad0 = 0x37	# read ADC value from RA0
 u_ad1 = 0x38	# read ADC value from RA1
 u_i2c_init = 0x40	# i2c_init(void)
