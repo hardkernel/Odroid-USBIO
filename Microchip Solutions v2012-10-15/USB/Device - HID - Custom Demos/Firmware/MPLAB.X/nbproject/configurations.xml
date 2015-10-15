@@ -95,7 +95,6 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../p18f45k50.lib</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <loading>
@@ -143,7 +142,7 @@
         <property key="enable-ou" value="true"/>
         <property key="enable-ow" value="true"/>
         <property key="extra-include-directories"
-                  value="C:\Microchip Solutions v2012-10-15\Microchip\Include;C:\Microchip_Solutions_v2012-10-15\USB\dev_hid_demo\Firmware;C:\Microchip_Solutions_v2012-10-15\USB\dev_hid_demo\Firmware\USB"/>
+                  value="..\;..\..\..\..\Microchip\Include"/>
         <property key="optimization-master" value="Enable all"/>
         <property key="preprocessor-macros" value="HARDKERNEL_PIC18F45K50"/>
         <property key="procedural-abstraction-passes" value="0"/>
