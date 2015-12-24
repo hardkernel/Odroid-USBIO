@@ -9,7 +9,7 @@
  Software License Agreement:
 
  The software supplied herewith by Microchip Technology Incorporated
- (the "Company") for its PIC� Microcontroller is intended and
+ (the "Company") for its PIC�?Microcontroller is intended and
  supplied to you, the Company's customer, for use solely and
  exclusively on Microchip PIC Microcontroller products. The
  software is owned by the Company and/or its supplier, and is
@@ -95,75 +95,34 @@
     #define DEMO_BOARD PICDEM_FS_USB_K50
     #define PICDEM_FS_USB_K50
     #define PIC18F45K50_FAMILY
-    #define CLOCK_FREQ 48000000
-
+//    #define CLOCK_FREQ 48000000
 
     /** LED ************************************************************/
-#if defined(HARDKERNEL_PIC18F45K50)
-    #define mInitAllLEDs()      LATC &= 0xFB; TRISC &= 0xFB;
-#else
-    #define mInitAllLEDs()      LATD &= 0xF0; TRISD &= 0xF0;
-#endif
+    #define mInitAllLEDs()      LATCbits.LATC2=1; TRISCbits.TRISC2=0; TRISDbits.TRISD6 = 0;
     
-#if defined(HARDKERNEL_PIC18F45K50)
     #define mLED_1              LATCbits.LATC2
-#else
-    #define mLED_1              LATDbits.LATD0
-#endif
 
-    #define mLED_2              LATDbits.LATD1
-    #define mLED_3              LATDbits.LATD2
-    #define mLED_4              LATDbits.LATD3
-    
-    #define mGetLED_1()         mLED_1
-    #define mGetLED_2()         mLED_2
-    #define mGetLED_3()         mLED_3
-    #define mGetLED_4()         mLED_4
-
-    #define mLED_1_On()         mLED_1 = 1;
-    #define mLED_2_On()         mLED_2 = 1;
-    #define mLED_3_On()         mLED_3 = 1;
-    #define mLED_4_On()         mLED_4 = 1;
-    
-    #define mLED_1_Off()        mLED_1 = 0;
-    #define mLED_2_Off()        mLED_2 = 0;
-    #define mLED_3_Off()        mLED_3 = 0;
-    #define mLED_4_Off()        mLED_4 = 0;
-    
-    #define mLED_1_Toggle()     mLED_1 = !mLED_1;
-    #define mLED_2_Toggle()     mLED_2 = !mLED_2;
-    #define mLED_3_Toggle()     mLED_3 = !mLED_3;
-    #define mLED_4_Toggle()     mLED_4 = !mLED_4;
+    #define mLED_2              LATDbits.LATD6
     
     /** SWITCH *********************************************************/
-#if defined(HARDKERNEL_PIC18F45K50)
-    #define mInitAllSwitches()  TRISDbits.TRISD3=1;TRISBbits.TRISB5=1;
-#else
-    #define mInitAllSwitches()  TRISBbits.TRISB4=1;TRISBbits.TRISB5=1;
-#endif
+    #define mInitAllSwitches()  TRISA |= 0x7c; TRISB |= 0x38; TRISC |= 0x03; TRISD |= 0x3; TRISE |= 0x7;
 
-#if defined(HARDKERNEL_PIC18F45K50)
-    #define mInitSwitch2()      TRISDbits.TRISD3=1;
-#else
-    #define mInitSwitch2()      TRISBbits.TRISB4=1;
-#endif
+    #define mKEY_0              PORTAbits.RA5
+    #define mKEY_1              PORTAbits.RA2
+    #define mKEY_2              PORTAbits.RA3
 
-    #define mInitSwitch3()      TRISBbits.TRISB5=1;
+    #define mKEY_3              PORTAbits.RA4
+    #define mKEY_4              PORTDbits.RD0
+    #define mKEY_5              PORTAbits.RA6
+    #define mKEY_6              PORTCbits.RC0
+    #define mKEY_7              PORTCbits.RC1
+    #define mKEY_8              PORTDbits.RD5
+    #define mKEY_9              PORTDbits.RD4
+    #define mKEY_10             PORTEbits.RE0
+    #define mKEY_11             PORTEbits.RE1
+    #define mKEY_12             PORTEbits.RE2
+    #define mKEY_13             PORTBbits.RB5
+    #define mKEY_14             PORTBbits.RB4
+    #define mKEY_15             PORTBbits.RB3
 
-    #define sw2                 PORTBbits.RB4
-
-#if defined(HARDKERNEL_PIC18F45K50)
-    #define sw3                 PORTDbits.RD3
-#else
-    #define sw3                 PORTBbits.RB5
-#endif
-    
-    /** POT ************************************************************/
-    #define mInitPOT()          {TRISAbits.TRISA0=1;ANSELAbits.ANSA0=1;ADCON1=0;ADCON2=0xBE;ADCON0=0x01;}
-    #define mInitPOT1()         {TRISAbits.TRISA0=1;ANSELAbits.ANSA0=1;ADCON1=0;ADCON2=0xBE;ADCON0=0x01;}
-
-   
-    /** I/O pin definitions ********************************************/
-    #define INPUT_PIN 1
-    #define OUTPUT_PIN 0
 #endif  //HARDWARE_PROFILE_PICDEM_FSUSB_K50_H
