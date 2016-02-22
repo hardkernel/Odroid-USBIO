@@ -25,7 +25,6 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
-      <itemPath>../../../../../../Microchip Solutions v2012-10-15-org/USB/Device - Bootloaders/HID/Firmware - PIC18 Non-J/BootModified.18f45k50_g.lkr</itemPath>
     </logicalFolder>
     <logicalFolder name="ObjectFiles"
                    displayName="Object Files"
