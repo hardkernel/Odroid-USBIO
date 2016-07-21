@@ -1164,7 +1164,7 @@ void ProcessIO(void)
             case 0x37:	//Read POT command.  Uses ADC to measure an analog voltage on one of the ANxx I/O pins, and returns the result to the host
                 {
                     WORD_VAL w;
-                    
+			ADCON0=0x01;  // 0000 in CHS bits select A0 pin for ADC input channel [0000 01]
                     //Check to make sure the endpoint/buffer is free before we modify the contents
 	                if(!HIDTxHandleBusy(USBInHandle))
 	                {
